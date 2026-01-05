@@ -106,16 +106,21 @@ Player Profile is split in multiple sections
     - Recent games timeline.: Display the last 10 games and its results that filtered player played   
 
 
+### 🕒 Weekly Matches   
+![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/05_weeklyscore.png "Weekly Score")   
+- Displays all matches info, winner team (by highlighting  Red (lost) /yellow (draw)/Green (win) , the score of the match, top scorer, and top assistant of the night
+  
+- For matches with event data an ℹ️ is displayed and the row can be clicked to open up **the timeline of events in match**
+  
+ ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/06_timeline.png "Event Timeline")   
+
+
 ### 🤝 Pair Synergy   
 - Measures how pairs perform together vs expected   
 - Filters by player   
 - Minimum games threshold   
 - Includes **event-based synergy**     
   (goal + assist + second assist counted once per event)   
-
-
-### 🕒 Match Timeline   
-- Visual timeline of match events   
 
 
 ### 🏆 Achievements (Optional / WIP)   
