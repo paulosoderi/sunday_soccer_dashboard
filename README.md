@@ -19,54 +19,54 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
     Toggling it will save the choice locally and will remember when the dashboard is oppened again
  
 
-### 📅 Match & History Analysis
-- View **all history**, a **specific year**, or a **specific session**
+### 📅 Match & History Analysis   
+- View **all history**, a **specific year**, or a **specific session**   
   
-![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_filters.png "Filter")
+![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_filters.png "Filter")   
   
-- Filters are **independent and persistent**.
-- Filters will apply through all KPIs and tables.
-- When filtering the best record/streak/assist/scores/etc will be showing the best for the filter selected.
+- Filters are **independent and persistent**.   
+- Filters will apply through all KPIs and tables.   
+- When filtering the best record/streak/assist/scores/etc will be showing the best for the filter selected.   
   
   **Available Filters:**  
     A) all-time: Display all data available to date  
     B) year: load the next dropdown where you can select the Year. All matches played within the choosen year will be used to calculate the KPIs.   
     C) session: load the next dropdown where you can select the session.  
 
-  The selected filter is shown as a pill right next to the second dropdown
+  The selected filter is shown as a pill right next to the second dropdown   
     
-  When filter is selected, all visuals are updated. 
+  When filter is selected, all visuals are updated.  
    ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_a_filters.png "Filter")
   
-  This can trigger empty data for KPIs that needs a minimum ammount of data points or when the data point does not exist for the filter in that period.
+  This can trigger empty data for KPIs that needs a minimum ammount of data points or when the data point does not exist for the filter in that period.   
   ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_b_filters.png "Filter")
 
-  The selected filter is shown as a pill right next to the second dropdown
+  The selected filter is shown as a pill right next to the second dropdown   
 
-  **Responsive Design: Mobile and Desktop**
+  **Responsive Design: Mobile and Desktop**   
     Dashboard can open in mobile or desktop. Several sections of this dashboard requires large tables computing multiple column, this is not viable in mobile version therefore some columns are only shown in the desktop version
 
 
-### 🧮 KPIs Section
+### 🧮 KPIs Section   
 
  ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_a_filters.png "KPIs")
  
-- **📅 Matches**: Total matches played within selected filter.
-- **🥅 Avg goals / Sunday:** Average goals per Sunday: total_goals / total_matches excluding 1-0 results as those are in the data to record the weekends where score was not recorded. 
-- **⚖️ Draw rate:**: % of how many games ended in a draw total_draws / total_matches
-- **⚔️ Close games (≤1 goal):** Count of matches that ended whitin 1 goal difference excluding 1-0 results  
-- **🧢 Captains:** It shows the captain`s performance displaying the record (W-D-L) as a captain. it enforces a minimum of 3 matches to reduce noise. Sorts by the highest win%
-- **Best win streak** (with most recent end date): Displays the best win streak for the period, date below show the day the streak ended (if current, it will show the last weekend)
-- **🏆Top Scorers:** Sum of total goals per player. It shows top 3 best scorers
-- **🎯 Top Assist:** Sum of total assists per player.It shows top 1 only
+- **📅 Matches**: Total matches played within selected filter.   
+- **🥅 Avg goals / Sunday:** Average goals per Sunday: total_goals / total_matches excluding 1-0 results as those are in the data to record the weekends where score was not recorded.  
+- **⚖️ Draw rate:**: % of how many games ended in a draw total_draws / total_matches   
+- **⚔️ Close games (≤1 goal):** Count of matches that ended whitin 1 goal difference excluding 1-0 results   
+- **🧢 Captains:** It shows the captain`s performance displaying the record (W-D-L) as a captain. it enforces a minimum of 3 matches to reduce noise. Sorts by the highest win%   
+- **Best win streak** (with most recent end date): Displays the best win streak for the period, date below show the day the streak ended (if current, it will show the last weekend)   
+- **🏆Top Scorers:** Sum of total goals per player. It shows top 3 best scorers   
+- **🎯 Top Assist:** Sum of total assists per player.It shows top 1 only   
 
 
 ### 👤 Player Leaderboard
- ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/03_player_leaderboard.png "Filter")
+ ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/03_player_leaderboard.png "Filter")   
  
-**- Ranked player table sorts by Win% by default:**
-    **KPIs metrics:**   
-        - **Player:** Player Name  
+**- Ranked player table sorts by Win% by default:**   
+    **KPIs metrics:**    
+        - **Player:** Player Name   
         - **GP (Games played):** Total games played   
         - **W-D-L:** Win - Draw - Lost   
         - **Win%:**  win / total games played   
@@ -79,18 +79,18 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
         - **Imp.:** Impact is calculated as  Player win% − baseline win% in percentage points where baseine win% is the average win% of all players   
         - **Streak:**  Current streak (sequential wins/lossess): 🔥 for win streak, ❄️ for loss streak.   
   
-**- Minimum games filter**
-    It`s a dropdown that filters data points that is less than the selected minimal filter. This is to reduce noise when players have not enough matches played to be relevant statistically.
+**- Minimum games filter**   
+    It`s a dropdown that filters data points that is less than the selected minimal filter. This is to reduce noise when players have not enough matches played to be relevant statistically.   
     
-**- Click any player to open their profile**
-    The player table is clickable, when clicking on a player, the Player Profile is rendered with the selected player and screen will navigate to the player profile card
+**- Click any player to open their profile**   
+    The player table is clickable, when clicking on a player, the Player Profile is rendered with the selected player and screen will navigate to the player profile card   
   
 
-### 🎯 Player Profile
-![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/04_playerprofile.png "Player Profile")
+### 🎯 Player Profile   
+![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/04_playerprofile.png "Player Profile")   
 
-Player Profile is split in multiple sections   
-**📝 Matches**   
+Player Profile is split in multiple sections    
+**📝 Matches**    
     - Win / Draw / Loss record   
     - Win percentage   
     - Sessions played (all-time)... this is the only metric that will not change based on the filters   
