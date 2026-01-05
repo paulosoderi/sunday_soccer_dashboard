@@ -28,7 +28,7 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
 - Filters will apply through all KPIs and tables.
 - When filtering the best record/streak/assist/scores/etc will be showing the best for the filter selected.
   
-  Available Filters:  
+  **Available Filters:**  
     A) all-time: Display all data available to date  
     B) year: load the next dropdown where you can select the Year. All matches played within the choosen year will be used to calculate the KPIs.   
     C) session: load the next dropdown where you can select the session.  
@@ -41,10 +41,15 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
   This can trigger empty data for KPIs that needs a minimum ammount of data points or when the data point does not exist for the filter in that period.
   ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_b_filters.png "Filter")
 
+  The selected filter is shown as a pill right next to the second dropdown
+
+  **Responsive Design: Mobile and Desktop**
+    Dashboard can open in mobile or desktop. Several sections of this dashboard requires large tables computing multiple column, this is not viable in mobile version therefore some columns are only shown in the desktop version
+
 
 ### 🧮 KPIs Section
 
- ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_a_filters.png "Filter")
+ ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_a_filters.png "KPIs")
  
 - **📅 Matches**: Total matches played within selected filter.
 - **🥅 Avg goals / Sunday:** Average goals per Sunday: total_goals / total_matches excluding 1-0 results as those are in the data to record the weekends where score was not recorded. 
@@ -57,35 +62,66 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
 
 
 ### 👤 Player Leaderboard
-- Ranked player table
-- Minimum games filter
-- Click any player to open their profile
+ ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/03_player_leaderboard.png "Filter")
+ 
+**- Ranked player table sorts by Win% by default:**
+    **KPIs metrics:**   
+        - **Player:** Player Name  
+        - **GP (Games played):** Total games played   
+        - **W-D-L:** Win - Draw - Lost   
+        - **Win%:**  win / total games played   
+        - **G:** Total goals scored by player   
+        - **A:** Total assists scored by player   
+        - **2A:** Total 2nd assists scored by player   
+        - **Goals Pro:** total team goals scored in games the player played.   
+        - **Goals Against:** total team goals conceded in games the player played.   
+        - **Goal Diff.:** Total goals difference: Goals Pro − Goals Against.   
+        - **Imp.:** Impact is calculated as  Player win% − baseline win% in percentage points where baseine win% is the average win% of all players   
+        - **Streak:**  Current streak (sequential wins/lossess): 🔥 for win streak, ❄️ for loss streak.   
+  
+**- Minimum games filter**
+    It`s a dropdown that filters data points that is less than the selected minimal filter. This is to reduce noise when players have not enough matches played to be relevant statistically.
+    
+**- Click any player to open their profile**
+    The player table is clickable, when clicking on a player, the Player Profile is rendered with the selected player and screen will navigate to the player profile card
   
 
 ### 🎯 Player Profile
-- Win / Draw / Loss record
-- Win percentage
-- Sessions played (all-time)
-- Event-based stats (goals, assists, second assists)
-- Team impact (goal differential, impact vs baseline)
-- Best win streak & cold streak
-- Captain record
-- Recent games timeline with pagination
+![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/04_playerprofile.png "Player Profile")
 
-### 🤝 Pair Synergy
-- Measures how pairs perform together vs expected
-- Filters by player
-- Minimum games threshold
-- Includes **event-based synergy**  
-  (goal + assist + second assist counted once per event)
+Player Profile is split in multiple sections   
+**📝 Matches**   
+    - Win / Draw / Loss record   
+    - Win percentage   
+    - Sessions played (all-time)... this is the only metric that will not change based on the filters   
+**👨🏻‍🏫 Individual Stats**  
+    - Event-based stats (goals, assists, second assists)   
+**👕 Team Impact**   
+    - Team impact (goal differential, impact vs baseline)   
+**Streak record**   
+    - Best win streak & cold streak   
+**Captain record**   
+    - Captain record W-D-L. It shows only if player was a captain at some point   
+**Recent games**   
+    - Recent games timeline.: Display the last 10 games and its results that filtered player played   
 
-### 🕒 Match Timeline
-- Visual timeline of match events
 
-### 🏆 Achievements (Optional / WIP)
-- Pixel-art achievements
-- Bronze / Silver / Gold rarity
-- Progress bars
+### 🤝 Pair Synergy   
+- Measures how pairs perform together vs expected   
+- Filters by player   
+- Minimum games threshold   
+- Includes **event-based synergy**     
+  (goal + assist + second assist counted once per event)   
+
+
+### 🕒 Match Timeline   
+- Visual timeline of match events   
+
+
+### 🏆 Achievements (Optional / WIP)   
+- Pixel-art achievements   
+- Bronze / Silver / Gold rarity   
+- Progress bars   
 
 ---
 
