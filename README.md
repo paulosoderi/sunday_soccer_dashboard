@@ -47,6 +47,7 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
     Dashboard can open in mobile or desktop. Several sections of this dashboard requires large tables computing multiple column, this is not viable in mobile version therefore some columns are only shown in the desktop version
 
 
+
 ### 🧮 KPIs Section   
 
  ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/02_a_filters.png "KPIs")
@@ -60,6 +61,8 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
 - **🏆Top Scorers:** Sum of total goals per player. It shows top 3 best scorers   
 - **🎯 Top Assist:** Sum of total assists per player.It shows top 1 only   
 
+**Technical Documentation**
+function renderKPIsSection(model)
 
 ### 👤 Player Leaderboard
  ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/03_player_leaderboard.png "Filter")   
@@ -138,7 +141,355 @@ Player Profile is split in multiple sections
 - No backend, no server state
 - No frameworks
 
-### Data Sources
+---
+
+## 📁 Project Structure
+
+```
+soccer_dash_refactor/
+│
+├── index.html
+│
+├── css/
+├── js/
+├── icons/
+
+```
+
+---
+
+## index.html
+
+### Purpose
+- Single application entry point  
+- Defines DOM structure and layout  
+- Loads all CSS and JS assets  
+
+### Key characteristics
+- No inline CSS  
+- Minimal inline JS (if any)  
+- Relies on IDs and class names as stable contracts for rendering logic  
+
+> This file is intentionally kept **dumb**: no business logic, no calculations.
+
+---
+
+## CSS Layer (`css/`)
+
+CSS is organized by **visual responsibility**, not atomic rules.
+```
+css/
+├── base.css
+├── components.css
+├── dashboard.css
+├── achievements.css
+└── timeline.css
+```
+
+---
+
+### `base.css`
+
+**Global foundations**
+- CSS variables (dark / light themes)
+- Page layout
+- Typography
+- Buttons, inputs, selects
+- Core grid and card styles
+- Global media queries
+
+**Rule**
+> If it affects multiple sections, it lives here.
+
+---
+
+### `components.css`
+
+**Reusable UI components**
+- Tables and rows
+- Badges and tags
+- Generic modal primitives
+- Hover states
+- Shared utility classes
+
+> No dashboard-specific logic belongs here.
+
+---
+
+### `dashboard.css`
+
+**Dashboard-specific styling**
+- KPI cards
+- KPI ranking visuals
+- Player leaderboard layout
+- Weekly scores coloring
+- Responsive table behavior
+
+---
+
+### `achievements.css`
+
+**Achievements system**
+- Achievement cards
+- Locked / unlocked states
+- Progress bars
+- Achievement modal
+- Rarity glow effects (bronze / silver / gold)
+
+Isolated on purpose so the achievements system can be:
+- Disabled  
+- Reworked  
+- Extracted later  
+
+---
+
+### `timeline.css`
+
+**Match timeline & modal**
+- Match modal layout
+- Timeline container
+- Event nodes
+- Left / right alignment
+- Mobile timeline handling
+
+---
+```
+## Icons (`icons/`)
+
+icons/
+├── favicon.ico
+├── game_.png
+├── goal_.png
+├── session_.png
+└── win_.png
+```
+
+### Purpose
+- Pixel-art achievements
+- Visual identity
+- Static assets only  
+
+> Kept flat intentionally (no nesting).
+
+---
+
+## JavaScript Layer (`js/`)
+
+JavaScript is organized by **domain**, not by technical abstraction.
+```
+js/
+├── data/
+├── model/
+├── render/
+├── ui/
+└── utils/
+```
+
+> No bundler is required. Files are loaded using classic scripts.
+
+---
+
+## Data Layer (`js/data/`)
+```
+js/data/
+├── loaders.js
+└── mock-data.js
+```
+
+
+### `mock-data.js`
+- Embedded CSV strings  
+- Activated via `?mock=true`  
+- Enables offline / local testing  
+
+> No logic here — constants only.
+
+---
+
+### `loaders.js`
+
+**Data acquisition & initialization**
+- Load CSVs from:
+  - CloudFront (production)
+  - User uploads
+  - Embedded mock data
+- Populate raw datasets:
+  - `RAW_PLAYER_ROWS`
+  - `RAW_MATCH_ROWS`
+  - `RAW_EVENT_ROWS`
+- Trigger downstream initialization  
+
+> Responsibilities end once raw data is available.
+
+---
+
+## Model Layer (`js/model/`)
+```
+js/model/
+└── model.js
+```
+
+### `model.js`
+
+**Core business logic**
+
+Responsibilities:
+- Normalize match data
+- Fix missing goals
+- Build match summaries
+- Build player statistics
+- Compute streaks
+- Compute captain stats
+- Compute pair synergy
+- Attach event-based stats
+
+**Design rules**
+- No DOM access  
+- No rendering  
+- Only data transformations  
+
+> Produces the canonical `MODEL` object used by renderers.
+
+---
+
+## Render Layer (`js/render/`)
+```
+js/render/
+├── achievements.js
+├── kpis-cards.js
+├── leaderboard.js
+├── pair-synergy.js
+├── player-profile.js
+├── weekly-matches.js
+└── render.js
+```
+
+---
+
+### `render.js`
+**Render orchestrator**
+- Calls all render functions
+- Ensures full refresh after filters change  
+
+> Acts as the single rendering entry point.
+
+---
+
+### `kpis-cards.js`
+- KPI calculations
+- KPI DOM updates
+- Top scorers, assists, streaks, captains  
+
+Pattern used:
+
+computeX(model)   
+renderX(model)   
+
+## leaderboard.js
+
+**Responsibilities**
+- Player leaderboard rendering  
+- Sorting  
+- Click-to-profile behavior  
+- Responsive handling  
+
+---
+
+## player-profile.js
+
+**Responsibilities**
+- Player profile card  
+- Individual stats  
+- Team impact  
+- Streaks  
+- Recent games  
+
+---
+
+## weekly-matches.js
+
+**Responsibilities**
+- Weekly match table  
+- Pagination  
+- Match modal trigger  
+- Chart rendering  
+
+---
+
+## pair-synergy.js
+
+**Responsibilities**
+- Pair synergy table  
+- Filters (player, min games)  
+- Synergy highlighting  
+
+---
+
+## achievements.js
+
+**Responsibilities**
+- Achievement evaluation  
+- Progress bars  
+- Modal rendering  
+- Rarity classification  
+
+---
+
+## UI Layer (`js/ui/`)
+```
+js/ui/
+└── ui-change.js
+```
+
+### ui-change.js
+
+**User interaction controller**
+- View mode changes (All / Year / Session)  
+- Query-string handling  
+- Filter application  
+- Active filter tag updates  
+- Triggers re-render flow  
+
+> This file is the bridge between **UI and model**.
+
+---
+
+## Utilities (`js/utils/`)
+```
+js/utils/
+└── helpers.js
+```
+
+### helpers.js
+
+**Shared helpers**
+- CSV parsing  
+- Formatting helpers (`fmt`, `pct0`)  
+- DOM helpers (`setElText`, `setStatus`)  
+- Date utilities  
+- Normalization helpers  
+
+> No business rules live here.
+
+---
+
+## 🧱 Architecture Flow
+
+```
+CSV / Upload / Mock
+        ↓
+   Data Loaders
+        ↓
+     Model Build
+        ↓
+   Render Orchestrator
+        ↓
+   Section Renderers
+        ↓
+       DOM
+```
+
+## Data Sources
 The app supports **three data loading modes**:
 
 1. **Remote CSVs (Production)**  
@@ -152,7 +503,7 @@ Use the file upload panel for testing whe mpck=true
 
 ---
 
-## 📁 Expected CSV Schemas
+### 📁 Expected CSV Schemas
 
 ### `player_game.csv`
 Required columns:
@@ -184,6 +535,19 @@ session_id, match_id, Timestamp, Team, goal_player_id, assist_player_id, second_
 - After load, **user interaction controls everything**
 - Invalid values are ignored safely
 - One filter never resets another unless explicitly changed by the user
+
+
+| Parameter | Example | Description |
+|---------|--------|-------------|
+| mock | mock=true | Enable embedded mock data |
+| player | player=Ivan | Auto-select player |
+| year | year=2025 | Filter by year |
+| session | session=S02 | Filter by session |
+
+Example:
+```
+index.html?session=S02&player=Alysson
+```
 
 ---
 
@@ -230,3 +594,4 @@ in a browser. No build step required. Running locally will not give you access t
 
 Built for a friendly Sunday soccer group.  
 Designed to be transparent, fast, and fun.
+
