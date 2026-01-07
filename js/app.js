@@ -31,7 +31,7 @@ const EVENTS_CSV_URL = `${CLOUDFRONT_BASE_URL}/data/match_events.csv`;
 const ACHIEVEMENTS = [
   // 🏟️ Games Played (The Journey)
   { id:"gp10",  icon:"icons/game_bronze.png", title:"Park Regular", rarity:"bronze", 
-    desc:"You’re no longer a stranger to the sidelines.", target_desc:"Play at least 10 games", target:3, value:p=>p.games },
+    desc:"You’re no longer a stranger to the sidelines.", target_desc:"Play at least 10 games", target:10, value:p=>p.games },
 
   { id:"gp50",  icon:"icons/game_silver.png", title:"Every Blade of Grass", rarity:"silver", 
     desc:"You have literally run over every inch of this pitch.", target_desc:"Play at least 50 games", target:50, value:p=>p.games },
