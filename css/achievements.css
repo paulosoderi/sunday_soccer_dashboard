@@ -1,0 +1,187 @@
+/* =========================
+   ACHIEVEMENT GRID 
+   ========================= */
+
+.ach-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:10px;
+}
+
+.ach{
+  background:#0e0e0e;
+  border-radius:12px;
+  padding:10px 8px;
+  text-align:center;
+  cursor:pointer;
+  border:2px solid #222;
+}
+
+.ach.unlocked{
+  border-color:#f5c16c;
+}
+
+.ach.locked{
+  opacity:.25;
+  filter:grayscale(1);
+}
+
+.ach img{
+  width:62px;
+  height:56px;
+  margin-bottom:6px;
+}
+
+.ach-title{
+  line-height: 1.65;
+  letter-spacing: 0.2px;
+  font-weight: 700;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.1;
+  color:white;
+}
+
+.ach-bar{
+  height:6px;
+  background:#222;
+  border-radius:4px;
+  margin-top:6px;
+  overflow:hidden;
+}
+
+.ach-bar > div{
+  height:100%;
+  background:linear-gradient(90deg,#b87333,#ffd36a);
+}
+
+/* =========================
+   MODAL BASE
+   ========================= */
+
+.ach-modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.ach-modal{
+  background:#0e0e0e;
+  border:3px solid black;
+  border-radius:14px;
+  width:320px;
+  max-width:90%;
+  box-shadow:0 0 0 4px #000, 0 12px 40px rgba(0,0,0,.6);
+  font-family:inherit;
+}
+
+.ach-modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 12px;
+  border-bottom:2px solid #222;
+  font-weight:600;
+  font-size:14px;
+  color:white;
+}
+
+.ach-modal-close{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.ach-modal-body{
+  text-align:center;
+  padding:12px;
+  font-size:13px;
+  line-height:1.4;
+  color:#ddd;
+}
+
+/* Icon */
+.ach-modal-icon{
+  width:124px;
+  height:112px;
+  display:block;
+  margin:6px auto 10px;
+  image-rendering:pixelated;
+}
+
+/* =========================
+   RARITY GLOW
+   ========================= */
+
+.ach-modal.bronze{
+  box-shadow:
+    0 0 0 4px #000,
+    0 0 16px rgba(184,115,51,.6),
+    0 12px 40px rgba(0,0,0,.6);
+  border-color:#b87333;
+}
+
+.ach-modal.silver{
+  box-shadow:
+    0 0 0 4px #000,
+    0 0 18px rgba(200,200,210,.7),
+    0 12px 40px rgba(0,0,0,.6);
+  border-color:#cfd8dc;
+}
+
+.ach-modal.gold{
+  box-shadow:
+    0 0 0 4px #000,
+    0 0 22px rgba(255,210,90,.9),
+    0 12px 40px rgba(0,0,0,.6);
+  border-color:#ffd36a;
+}
+
+/* =========================
+   LOCKED / UNLOCKED STATE
+   ========================= */
+
+/* Default (unlocked) */
+.ach-modal #achModalBody { display:block; }
+.ach-modal #achModalProgress { display:none; }
+.ach-modal #progressBarModel { display:none; }
+
+/* Locked state */
+.ach-modal.locked #achModalBody { display:none; }
+.ach-modal.locked #achModalProgress { display:block; }
+.ach-modal.locked #progressBarModel { display:block; }
+
+.ach-modal.locked .ach-modal-icon{
+  opacity:.25;
+  filter:grayscale(1);
+}
+
+/* Unlocked state (explicit for clarity) */
+.ach-modal.unlocked #achModalBody { display:block; }
+.ach-modal.unlocked #achModalProgress { display:none; }
+.ach-modal.unlocked #progressBarModel { display:none; }
+
+
+#achModalBody {
+  line-height: 1.65;
+  letter-spacing: 0.2px;
+  font-weight: 700;
+}
+
+#achModalTarget,
+#achModalProgress {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+/* Hide progress bar in grid when achievement is unlocked */
+.ach.unlocked .ach-bar {
+  display: none;
+}

@@ -1,0 +1,85 @@
+:root{
+  --bg:#0b0c10;
+  --headerBg:rgba(11,12,16,0.92);
+  --card:#12141c;
+  --text:#e8eaf0;
+  --muted:#a9afc3;
+  --line:#23283a;
+  --btn:#1a1f2f;
+  --btnHover:#2d3653;
+  --ctrl:#101423;
+  --ctrlText:#e8eaf0;
+  --hoverRow:rgba(122,162,255,.06);
+  --badgeBg:rgba(255,255,255,0.03);
+  --canvasBg:#0f1220;
+  --axisText:rgba(233,235,240,0.55);
+  --axisLine:rgba(233,235,240,0.18);
+  --barPos:rgba(122,162,255,0.85);
+  --barNeg:rgba(255,122,122,0.75);
+
+  --pos:#3ddc97;
+  --neg:#ff6b6b;
+  --neu:#ffd166;
+}
+
+:root[data-theme="light"]{
+  --bg:#fff8f0;
+  --headerBg:rgba(255,248,240,0.92);
+  --card:#ffffff;
+  --text:#1b1b1f;
+  --muted:#6b7280;
+  --line:#ecd9c8;
+  --btn:#ffe6d7;
+  --btnHover:#ffd5bf;
+  --ctrl:#fff1e6;
+  --ctrlText:#1b1b1f;
+  --hoverRow:rgba(255,165,120,.18);
+  --badgeBg:rgba(255,165,120,0.12);
+  --canvasBg:#fff1e6;
+  --axisText:rgba(30,30,40,0.60);
+  --axisLine:rgba(30,30,40,0.18);
+  --barPos:rgba(70,180,140,0.65);
+  --barNeg:rgba(245,110,110,0.60);
+
+  --pos:#1f9d6b;
+  --neg:#d94a4a;
+  --neu:#c88800;
+}
+
+#dataPanel {
+  display: none;
+}
+
+#playerAchievementsCard {
+  display: none;
+}
+
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+header{padding:18px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--headerBg);backdrop-filter:blur(8px);z-index:2}
+h1{font-size:18px;margin:0 0 6px}
+.sub{color:var(--muted);font-size:12px}
+.wrap{padding:16px;max-width:100%;margin:0 auto}
+.grid{display:grid;gap:12px}
+.grid.kpis{grid-template-columns:repeat(6,minmax(0,1fr))}
+.grid.two{grid-template-columns:1.2fr .8fr}
+.grid.twoinverted{grid-template-columns:.8fr 1.2fr}
+@media (max-width:980px){
+  .grid.twoinverted{ grid-template-columns:1fr }
+}
+@media(max-width:980px){.grid.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.two{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi .label{color:var(--muted);font-size:12px}
+.kpi .value{font-size:22px;font-weight:700;margin-top:6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{background:var(--btn);color:var(--text);border:1px solid var(--line);padding:8px 10px;border-radius:10px;cursor:pointer}
+.btn:hover{border-color:var(--btnHover)}
+input[type=file]{color:var(--muted)}
+select{background:var(--ctrl);color:var(--ctrlText);border:1px solid var(--line);border-radius:10px;padding:8px}
+input[type=text]{background:var(--ctrl);color:var(--ctrlText);border:1px solid var(--line);border-radius:10px;padding:8px;outline:none}
+input[type=text]::placeholder{color:var(--muted)}
+
+.themeToggle{display:inline-flex;align-items:center;gap:8px}
+.switch{width:44px;height:26px;border-radius:999px;border:1px solid var(--line);background:var(--ctrl);position:relative;cursor:pointer;flex:0 0 auto}
+.knob{width:20px;height:20px;border-radius:50%;background:var(--card);border:1px solid var(--line);position:absolute;top:2px;left:2px;transition:transform .18s ease}
+:root[data-theme="light"] .knob{transform:translateX(18px)}

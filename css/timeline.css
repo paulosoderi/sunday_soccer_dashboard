@@ -1,0 +1,158 @@
+.match-has-events:hover td {
+  background: rgba(122,162,255,.08);
+}
+
+.match-modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.match-modal{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  width:520px;
+  max-width:92%;
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  color:var(--text);
+}
+
+#matchModalTitle{
+  color:var(--text);
+}
+
+.match-modal-close{
+  background:none;
+  border:none;
+  color:var(--text);
+  font-size:16px;
+  cursor:pointer;
+}
+
+.match-modal-body{
+  padding:12px;
+  color:var(--text);
+}
+.match-modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:10px 12px;
+  border-bottom:1px solid var(--line);
+  color:var(--text);
+}
+
+.timeline-wrap{
+  position:relative;
+  height:360px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:transparent;
+  overflow:hidden;
+  overflow-y:auto;  
+  padding-top:28px;  
+   padding-bottom:20px; 
+}
+
+.timeline-line{
+  position:absolute;
+  left:50%;
+  top:10px;
+  bottom:10px;
+  width:2px;
+  background:var(--axisLine);
+}
+
+#matchTimelineEvents{
+  position:relative;   /* REQUIRED */
+  min-height:1px;
+}
+/* Event node */
+.tl-event{
+  position:absolute;
+  max-width:46%;
+  font-size:12px;
+  line-height:1.2;
+  /*padding:4px 6px;*/
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--badgeBg);
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.tl-left{ right:52%; text-align:right; }
+.tl-right{ left:52%; text-align:left; }
+
+/* Team pill inside event */
+.tl-team{
+  display:inline-block;
+  font-size:11px;
+  font-weight:800;
+  padding:2px 6px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  margin-right:6px;
+}
+
+.tl-team.black{
+  background:rgba(0,0,0,.10);
+}
+
+.tl-team.white{
+  background:rgba(255,255,255,.18);
+}
+.timeline-headers{
+  position:absolute;
+  top:6px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  pointer-events:none;
+  z-index:2;
+}
+
+.timeline-header {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 2px 8px;
+   
+    
+    color: var(--text);
+    width: 100%;
+    
+}
+
+.timeline-header.left{
+  margin-left:6px;
+  border: 1px solid white;
+  background: black;
+  color: white;
+}
+
+.timeline-header.right{
+  margin-left:6px;
+  border: 1px solid black;
+  background: white;
+  color: black;
+}
+
+@media (max-width:480px){
+  .timeline-wrap{
+    height:300px;    /* smaller viewport */
+  }
+}
+
+@media (max-width:480px){
+  .match-modal{ width:92%; }
+  .timeline-wrap{ height:320px; }
+  .tl-event{ font-size:11px; }
+}
