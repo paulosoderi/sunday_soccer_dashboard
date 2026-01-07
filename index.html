@@ -1,357 +1,383 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sunday Soccer Dashboard</title>
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/dashboard.css">
-<link rel="stylesheet" href="css/achievements.css">
-<link rel="stylesheet" href="css/timeline.css">
-<link rel="icon" type="image/png" href="icons/favicon.ico">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sunday Soccer Dashboard</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/achievements.css">
+  <link rel="stylesheet" href="css/timeline.css">
+  <link rel="icon" type="image/png" href="icons/favicon.ico">
 </head>
+
 <body>
-<header>
-  <div class="row" style="justify-content:space-between; align-items:flex-start;">
-    <div>
-      <h1>Sunday Soccer Dashboard</h1>
-      <div class="sub">v1.2b</div>
-    </div>
-    <div class="themeToggle" title="Toggle theme (saved on this browser)">
-      <span class="small" id="themeLabel">light</span>
-      <button class="switch" id="themeToggle" aria-label="Toggle theme"><span class="knob"></span></button>
-    </div>
-  </div>
-</header>
-
-<div class="wrap">
-  <div class="card" id="dataPanel">
-    <div class="row">
-      <button class="btn" id="useMock">Use embedded mock data</button>
-      <span class="tag">or load your files</span>
-      <label class="small">player_game.csv <input type="file" id="filePlayers" accept=".csv"></label>
-      <label class="small">match_team.csv <input type="file" id="fileMatches" accept=".csv"></label>
-      <label class="small">player_match_stats.csv <input type="file" id="fileEvents"  accept=".csv"></label> <!-- NEW (optional) -->
-
-      <button class="btn" id="loadFiles">Load uploaded CSVs</button>
-      <span class="mono" id="status"></span>
-    </div>  
-    <div class="small" style="margin-top:10px;">
-        Required columns:
-        <span class="mono">player_game: session_id, match_id, match_date, player_id, player_name, team</span>
-        <span class="mono" style="margin-left:6px;" title="Optional. Mark the captains each Sunday (one per team). Use 1/0, Y/N, true/false.">(optional: is_captain)</span> •
-        <span class="mono">match_team: session_id, match_id, match_date, team, goals_for, goals_against, result</span>
-        <span class="mono" style="margin-left:6px;" title="If result is NO_DATA, the match is excluded from the dashboard.">(NO_DATA rows excluded)</span>
+  <header>
+    <div class="row" style="justify-content:space-between; align-items:flex-start;">
+      <div>
+        <h1>Sunday Soccer Dashboard</h1>
+        <div class="sub">v1.2b</div>
+      </div>
+      <div class="themeToggle" title="Toggle theme (saved on this browser)">
+        <span class="small" id="themeLabel">light</span>
+        <button class="switch" id="themeToggle" aria-label="Toggle theme"><span class="knob"></span></button>
       </div>
     </div>
-    <div class="card" >
+  </header>
+
+  <div class="wrap">
+    <div class="card" id="dataPanel">
+      <div class="row">
+        <button class="btn" id="useMock">Use embedded mock data</button>
+        <span class="tag">or load your files</span>
+        <label class="small">player_game.csv <input type="file" id="filePlayers" accept=".csv"></label>
+        <label class="small">match_team.csv <input type="file" id="fileMatches" accept=".csv"></label>
+        <label class="small">player_match_stats.csv <input type="file" id="fileEvents" accept=".csv"></label>
+        <!-- NEW (optional) -->
+
+        <button class="btn" id="loadFiles">Load uploaded CSVs</button>
+        <span class="mono" id="status"></span>
+      </div>
+      <div class="small" style="margin-top:10px;">
+        Required columns:
+        <span class="mono">player_game: session_id, match_id, match_date, player_id, player_name, team</span>
+        <span class="mono" style="margin-left:6px;"
+          title="Optional. Mark the captains each Sunday (one per team). Use 1/0, Y/N, true/false.">(optional:
+          is_captain)</span> •
+        <span class="mono">match_team: session_id, match_id, match_date, team, goals_for, goals_against, result</span>
+        <span class="mono" style="margin-left:6px;"
+          title="If result is NO_DATA, the match is excluded from the dashboard.">(NO_DATA rows excluded)</span>
+      </div>
+    </div>
+    <div class="card">
       <div class="row" style="margin-top:10px;">
         <span class="small" title="Choose whether to view all history, one year, or one session.">View</span>
-          <select id="viewMode" title="Filter the dashboard by All history, a specific Year, or a specific Session.">
-            <option value="all" selected>All history</option>
-            <option value="year" >Year</option>
-            <option value="session">Session</option>
+        <select id="viewMode" title="Filter the dashboard by All history, a specific Year, or a specific Session.">
+          <option value="all" selected>All history</option>
+          <option value="year">Year</option>
+          <option value="session">Session</option>
         </select>
 
-        <span class="small" id="viewValueLabel" title="Pick which year or session to view. Defaults to the most recent.">Selection</span>
+        <span class="small" id="viewValueLabel"
+          title="Pick which year or session to view. Defaults to the most recent.">Selection</span>
         <select id="viewValue" title="Available years or sessions (most recent selected)." disabled></select>
 
         <span class="tag" id="activeFilterTag" title="Shows the active filter.">Filter: All history</span>
       </div>
     </div>
 
-  <div class="grid kpis" style="margin-top:12px;">
-    <div class="card kpi">
-      <div class="label" title="Number of Sundays with a recorded match (within selected filter).">📅 Matches</div>
-      <div class="value" id="kpiSundays">—</div>
-    </div>
-    <div class="card kpi">
-      <div class="label"  title="Excludes matches with placeholder scores (1–0, 0–1, 1–1) where full scoring was not tracked.">🥅 Avg goals / Sunday</div>
-      <div class="value" id="kpiAvgGoals">—</div>
-    </div>
-    <div class="card kpi">
-      <div class="label" title="Draw rate across team rows (W/D/L per team per match).">⚖️ Draw rate</div>
-      <div class="value" id="kpiDrawRate">—</div>
-    </div>
-    <div class="card kpi">
-      <div class="label" title="Close games: share of Sundays where goal difference is ≤ 1 (excluding 1-0 and 0-1 placeholder scores).">⚔️ Close games (≤1 goal)</div>
-      <div class="value" id="kpiClose">—</div>
-    </div>
-
-    <div class="card kpi">
-      <div class="label" title="Captains within the selected filter (is_captain=1). One line per captain: W-D-L and win%. Hidden unless captain has at least 3 captain games.">🧢 Captains</div>
-      <div class="small" id="kpiCaptainEmpty">—</div>
-      <div id="kpiCaptainList" style="margin-top:8px; display:flex; flex-direction:column; gap:6px;"></div>
-    </div>
-
-    <div class="card kpi">
-      <div class="label">🏆Top Scorers</div>
-      <ul class="kpi-rank" id="kpiTopScorers"></ul>
-      <div class="detail" id="kpiTopScorersDetail"></div>
-    </div>
-
-    <div class="card kpi">
-      <div class="label">🎯 Top Assist</div>
-      <div class="value" id="kpiTopAssist">—</div>
-      <div class="detail" id="kpiTopAssistDetail"></div>
-    </div>
-
-    <div class="card kpi">
-      <div class="label"
-          title="Best win streak (max consecutive wins) among all players in the selected filter.">
-        👑 Best streak
+    <div class="grid kpis" style="margin-top:12px;">
+      <div class="card kpi">
+        <div class="label" title="Number of Sundays with a recorded match (within selected filter).">📅 Matches</div>
+        <div class="value" id="kpiSundays">—</div>
       </div>
-      <div class="value" id="kpiBestStreak">—</div>
-      <div class="small" id="kpiBestStreakDetail"></div>
-    </div>
-  </div>
-
-  <div class="grid two" style="margin-top:12px;">
-    <div class="card">
-      <div class="row" style="justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-weight:700;">Player Leaderboard 👑</div>
-          <div class="small" title="Click a player to open their profile.">Click a player to open their profile.</div>
-        </div>
-        <div class="row" style="gap:8px;">
-          <span class="small" title="Hide players with fewer games than this in the selected filter.">Min games</span>
-          <select id="minGames" title="Hide players with fewer than this many games (selected filter).">
-            <option value="0" selected>0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="5">5</option>
-          </select>
-        </div>
+      <div class="card kpi">
+        <div class="label"
+          title="Excludes matches with placeholder scores (1–0, 0–1, 1–1) where full scoring was not tracked.">🥅 Avg
+          goals / Sunday</div>
+        <div class="value" id="kpiAvgGoals">—</div>
       </div>
-      <div style="margin-top:10px; overflow:auto;"><table id="tblPlayers"></table></div>
+      <div class="card kpi">
+        <div class="label" title="Draw rate across team rows (W/D/L per team per match).">⚖️ Draw rate</div>
+        <div class="value" id="kpiDrawRate">—</div>
+      </div>
+      <div class="card kpi">
+        <div class="label"
+          title="Close games: share of Sundays where goal difference is ≤ 1 (excluding 1-0 and 0-1 placeholder scores).">
+          ⚔️ Close games (≤1 goal)</div>
+        <div class="value" id="kpiClose">—</div>
+      </div>
+
+      <div class="card kpi">
+        <div class="label"
+          title="Captains within the selected filter (is_captain=1). One line per captain: W-D-L and win%. Hidden unless captain has at least 3 captain games.">
+          🧢 Captains</div>
+        <div class="small" id="kpiCaptainEmpty">—</div>
+        <div id="kpiCaptainList" style="margin-top:8px; display:flex; flex-direction:column; gap:6px;"></div>
+      </div>
+
+      <div class="card kpi">
+        <div class="label">🏆Top Scorers</div>
+        <ul class="kpi-rank" id="kpiTopScorers"></ul>
+        <div class="detail" id="kpiTopScorersDetail"></div>
+      </div>
+
+      <div class="card kpi">
+        <div class="label">🎯 Top Assist</div>
+        <div class="value" id="kpiTopAssist">—</div>
+        <div class="detail" id="kpiTopAssistDetail"></div>
+      </div>
+
+      <div class="card kpi">
+        <div class="label" title="Best win streak (max consecutive wins) among all players in the selected filter.">
+          👑 Best streak
+        </div>
+        <div class="value" id="kpiBestStreak">—</div>
+        <div class="small" id="kpiBestStreakDetail"></div>
+      </div>
     </div>
 
-    <div class="card" id="playerProfileCard">
-      <div class="row" style="justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-weight:700;">Player Profile 🎯</div>
+    <div class="grid two" style="margin-top:12px;">
+      <div class="card">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700;">Player Leaderboard 👑</div>
+            <div class="small" title="Click a player to open their profile.">Click a player to open their profile.</div>
+          </div>
+          <div class="row" style="gap:8px;">
+            <span class="small" title="Hide players with fewer games than this in the selected filter.">Min games</span>
+            <select id="minGames" title="Hide players with fewer than this many games (selected filter).">
+              <option value="0" selected>0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+            </select>
+          </div>
         </div>
-        <div class="row" style="gap:8px;">
-          <select id="playerSelect" title="Pick a player to view profile."></select>
+        <div style="margin-top:10px; overflow:auto;">
+          <table id="tblPlayers"></table>
         </div>
       </div>
 
-      <div class="split" style="margin-top:10px;">
-        <div class="card" style="padding:10px;">
-          <div style="font-weight:700; margin-bottom:6px;">📝 Matches</div>
-          <div class="small" title="Wins-Draws-Losses in the current filter.">Record</div>
-          <div style="font-weight:600; font-size:18px;" id="pWDL">—</div>
-          <div class="small" style="margin-top:8px;" title="Win% in the current filter.">Win%</div>
-          <div style="font-weight:600;" id="pWR">—</div>
-          <div class="small" style="margin-top:8px;" title="How many sessions the player participated in (all-time, including current session).">Sessions played</div>
-          <div style="font-weight:600;" id="pSessions">—</div>
-        </div>
-        <!-- Player actions (event stats) -->
-        <div class="card" style="padding:10px;">
-          <!-- Header -->
-          <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:8px;">
-            <div style="font-weight:700;">👨🏻‍🏫 Individual Stats</div>
-            <div class="small" style="color:#999;">
-              (<span id="pEvGames">—</span> Total Tracked games)
-            </div>
+      <div class="card" id="playerProfileCard">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700;">Player Profile 🎯</div>
           </div>
-
-          <!-- Goals -->
-          <div class="ev-row">
-            <div>
-              <div class="small">⚽ Goals</div>
-              <div class="ev-value" id="pEvGoals">—</div>
-            </div>
-            <div class="ev-right">
-              <div class="small">Per Game</div>
-              <div class="player-profile-text"id="pEvGoalsPg">—</div>
-            </div>
-          </div>
-
-          <!-- Assists -->
-          <div class="ev-row">
-            <div>
-              <div class="small">👟 Assists</div>
-              <div class="player-profile-text" id="pEvAssists">—</div>
-            </div>
-            <div class="ev-right">
-              <div class="small">Per Game</div>
-              <div class="player-profile-text" id="pEvAssistsPg">—</div>
-            </div>
-          </div>
-
-          <!-- 2nd Assists -->
-          <div class="ev-row">
-            <div>
-              <div class="small">2nd Assists</div>
-              <div class="player-profile-text" id="pEv2A">—</div>
-            </div>
-            <div class="ev-right">
-              <div class="small">Per Game</div>
-              <div class="player-profile-text" id="pEv2APg">—</div>
-            </div>
+          <div class="row" style="gap:8px;">
+            <select id="playerSelect" title="Pick a player to view profile."></select>
           </div>
         </div>
-        <div class="card" style="padding:10px;">
+
+        <div class="split" style="margin-top:10px;">
+          <div class="card" style="padding:10px;">
+            <div style="font-weight:700; margin-bottom:6px;">📝 Matches</div>
+            <div class="small" title="Wins-Draws-Losses in the current filter.">Record</div>
+            <div style="font-weight:600; font-size:18px;" id="pWDL">—</div>
+            <div class="small" style="margin-top:8px;" title="Win% in the current filter.">Win%</div>
+            <div style="font-weight:600;" id="pWR">—</div>
+            <div class="small" style="margin-top:8px;"
+              title="How many sessions the player participated in (all-time, including current session).">Sessions
+              played</div>
+            <div style="font-weight:600;" id="pSessions">—</div>
+          </div>
+          <!-- Player actions (event stats) -->
+          <div class="card" style="padding:10px;">
+            <!-- Header -->
+            <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:8px;">
+              <div style="font-weight:700;">👨🏻‍🏫 Individual Stats</div>
+              <div class="small" style="color:#999;">
+                (<span id="pEvGames">—</span> Total Tracked games)
+              </div>
+            </div>
+
+            <!-- Goals -->
+            <div class="ev-row">
+              <div>
+                <div class="small">⚽ Goals</div>
+                <div class="ev-value" id="pEvGoals">—</div>
+              </div>
+              <div class="ev-right">
+                <div class="small">Per Game</div>
+                <div class="player-profile-text" id="pEvGoalsPg">—</div>
+              </div>
+            </div>
+
+            <!-- Assists -->
+            <div class="ev-row">
+              <div>
+                <div class="small">👟 Assists</div>
+                <div class="player-profile-text" id="pEvAssists">—</div>
+              </div>
+              <div class="ev-right">
+                <div class="small">Per Game</div>
+                <div class="player-profile-text" id="pEvAssistsPg">—</div>
+              </div>
+            </div>
+
+            <!-- 2nd Assists -->
+            <div class="ev-row">
+              <div>
+                <div class="small">2nd Assists</div>
+                <div class="player-profile-text" id="pEv2A">—</div>
+              </div>
+              <div class="ev-right">
+                <div class="small">Per Game</div>
+                <div class="player-profile-text" id="pEv2APg">—</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:10px;">
             <!-- Team impact (team outcomes while player played) -->
             <div>
               <div style="font-weight:700; margin-bottom:6px;">👕 Team Impact</div>
-               <div class="small"      
-                    title="Total goals scored and conceded by the team in matches where this player played (current filter)."
-                    style="margin-top:8px;">Team Goals (For / Against)</div>
-              <div class="player-profile-text"  id="pTeamGoals">—</div>
+              <div class="small"
+                title="Total goals scored and conceded by the team in matches where this player played (current filter)."
+                style="margin-top:8px;">Team Goals (For / Against)</div>
+              <div class="player-profile-text" id="pTeamGoals">—</div>
 
               <div class="small" style="margin-top:8px;">Goal diff</div>
-              <div class="player-profile-text"  id="pTeamGD">—</div>
+              <div class="player-profile-text" id="pTeamGD">—</div>
 
-              <div class="small" style="margin-top:8px;" title="Player impact = player win% − baseline win% in percentage points.">Impact</div>
+              <div class="small" style="margin-top:8px;"
+                title="Player impact = player win% − baseline win% in percentage points.">Impact</div>
               <div class="player-profile-text" style="font-size:15px !important" id="pImpact">—</div>
 
               <div class="small" id="pImpactNote" style="margin-top:6px; line-height:1.4;">—</div>
-          </div>
-        </div>  
-
-          
-        </div>
-    
-      <div class="card" style="margin-top:10px; padding:10px;" id="pStreakCard">
-        <div class="small" title="Captain stats within current filter.">Streak record</div>
-        <div class="row" style="margin-top:8px;" id="pStreakRow"></div>
-      </div>
-      <div class="card" style="margin-top:10px; padding:10px;" id="pCaptainCard">
-        <div class="small" title="Captain stats within current filter.">Captain record</div>
-        <div class="row" id="pCaptainRow" style="margin-top:8px;"></div>
-      </div>
-
-      <div class="card" style="margin-top:10px; padding:10px;" id="pRecentGamesCard">
-        <div class="small" title="Captain stats within current filter.">Recent games</div>
-        <div class="row" style="margin-top:10px; justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-weight:700;"></div>
-          <div class="small" title="Shows the most recent 10 games for this player. Use pagination to go further back.">Last 10</div>
-        </div>
-        <div class="row" id="pTimelineControls"></div>
-      </div>
-      <div class="mono" id="pTimeline" style="margin-top:8px; line-height:1.7; white-space:pre-wrap;">—</div>
-      
-    </div id="divAchievements">
-       <div class="card" style="margin-top:10px; padding:10px;" id="playerAchievementsCard">
-        <div class="label">Achievements</div>
-        <div class="ach-grid" id="playerAchievements"></div>
-      </div>
-   
-    </div>     
-  </div>
-
-  
-  
-  <div class="grid twoinverted" style="margin-top:12px;">
-     <div class="card">
-      <div style="font-weight:700;">Weekly Scores 📅</div>
-      <div class="small" title="Click the game with event to open the timeline."> Click the row of matches with ℹ️ for the match's event timeline.</div>
-      <div class="row" style="justify-content:space-between; align-items:center; margin-top:10px;">
-        <div class="small" id="matchesPagerLabel">—</div>
-        <div class="row" id="matchesPager"></div>
-      </div>
-      <div style="margin-top:10px; overflow:auto;"><table id="tblMatches"></table></div>
-      <div style="margin-top:12px;">
-        <div class="small" style="margin-bottom:6px;" title="Bar chart of (Black goals − White goals) by date.">Goal difference by Sunday (Black perspective)</div>
-        <canvas id="chartGD" width="900" height="200"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="row" style="justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-weight:700;">Pair Synergy 🤝</div>
-          <div class="small" title="Pairs are computed when two players are on the same team in the same match.">Together win% vs expected win%</div>
-        </div>
-        <div class="row" style="gap:8px;">
-          <select id="pairPlayer"
-                  title="Filter pair synergy by player (matches Player A or Player B)."
-                  style="min-width:220px;">
-            <option value="">All players</option>
-          </select>
-          <select id="minPairGames" title="Hide player pairs with fewer than this many games together. Synergy becomes meaningful once pairs have played multiple times.">
-            <option value="5" selected>Min pair games: 5</option>
-            <option value="6">Min pair games: 6</option>
-            <option value="7">Min pair games: 7</option>
-          </select>
-        </div>
-      </div>
-      <div style="margin-top:10px; overflow:auto;"><table id="tblPairs"></table></div>
-    </div>
-
-   
-  </div>
-
-</div>
-
-<script defer src="js/data/mock-data.js"></script>
-<script defer src="js/utils/helpers.js"></script>
-<script defer src="js/data/loaders.js"></script>
-<script defer src="js/model/model.js"></script>
-
-<script defer src="js/render/kpis-cards.js"></script>
-<script defer src="js/render/leaderboard.js"></script>
-<script defer src="js/render/player-profile.js"></script>
-<script defer src="js/render/weekly-matches.js"></script>
-<script defer src="js/render/pair-synergy.js"></script>
-<script defer src="js/render/achievements.js"></script>
-
-
-<script defer src="js/ui/ui-change.js"></script>
-<script defer src="js/render/render.js"></script>
-<script defer src="js/app.js"></script>
-  <div id="achModalOverlay" class="ach-modal-overlay" style="display:none">
-    <div class="ach-modal">
-      <div class="ach-modal-header">
-        <span id="achModalTitle"></span>
-        <button class="ach-modal-close" onclick="closeAchievementModal()">✕</button>
-      </div>
-
-      <div class="ach-modal-body">
-        <img id="achModalIcon" class="ach-modal-icon" />
-        <div id="achModalBody"></div>        
-        <div id="achModalTarget"></div>    
-        <div id="achModalProgress"></div>
-        <div id="progressBarModel" class="ach-bar">
-          <div id="progressModal"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--timeline for modal-->
-  <div id="matchModalOverlay" class="match-modal-overlay" style="display:none">
-    <div class="match-modal">
-      <div class="match-modal-header">
-        <div>
-          <div id="matchModalTitle" style="font-weight:900;">Match</div>
-          <div id="matchModalSub" class="small" style="opacity:.85;">—</div>
-        </div>
-        <button class="match-modal-close" onclick="closeMatchModal()">✕</button>
-      </div>
-
-      <div class="match-modal-body">
-        <div class="timeline-wrap">
-          <!-- Team headers -->
-          <div class="timeline-headers">
-            <div class="timeline-header left">Black</div>
-            <div class="timeline-header right">White</div>
+            </div>
           </div>
 
-          <div class="timeline-line"></div>
-          <div id="matchTimelineEvents"></div>
+
         </div>
-        <div class="small" style="opacity:.8; margin-top:8px;">
-          Timeline represents 2 hours. Top = start, bottom = end.
+
+        <div class="card" style="margin-top:10px; padding:10px;" id="pStreakCard">
+          <div title="Captain stats within current filter." style="font-weight:700;">🔥 Streak record</div>
+          <div class="row" style="margin-top:8px;" id="pStreakRow"></div>
+        </div>
+        <div class="card" style="margin-top:10px; padding:10px;" id="pCaptainCard">
+          <div title="Captain stats within current filter." style="font-weight:700;">🧢 Captain record</div>
+          <div class="row" id="pCaptainRow" style="margin-top:8px;"></div>
+        </div>
+
+        <div class="card" style="margin-top:10px; padding:10px;" id="pRecentGamesCard">
+          <div  title="Captain stats within current filter." style="font-weight:700;">📅 Recent games</div>
+          <div class="row" style="margin-top:10px; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-weight:700;"></div>
+              <div class="small"
+                title="Shows the most recent 10 games for this player. Use pagination to go further back.">Last 10</div>
+            </div>
+            <div class="row" id="pTimelineControls"></div>
+          </div>
+          <div class="mono" id="pTimeline" style="margin-top:8px; line-height:1.7; white-space:pre-wrap;">—</div>
+        </div>
+        <div class="card"  style="margin-top:10px; padding:10px;">
+          <div id="divAchievements">
+            <div  id="playerAchievementsCard">
+              <div class="label" id="playerAchievementsTitle" style="font-weight:700;">🏆  Trophy Room</div>
+              <div class="ach-grid" id="playerAchievements"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="grid twoinverted" style="margin-top:12px;">
+        <div class="card">
+          <div style="font-weight:700;">Weekly Scores 📅</div>
+          <div class="small" title="Click the game with event to open the timeline."> Click the row of matches with ℹ️
+            for the match's event timeline.</div>
+          <div class="row" style="justify-content:space-between; align-items:center; margin-top:10px;">
+            <div class="small" id="matchesPagerLabel">—</div>
+            <div class="row" id="matchesPager"></div>
+          </div>
+          <div style="margin-top:10px; overflow:auto;">
+            <table id="tblMatches"></table>
+          </div>
+          <div style="margin-top:12px;">
+            <div class="small" style="margin-bottom:6px;" title="Bar chart of (Black goals − White goals) by date.">Goal
+              difference by Sunday (Black perspective)</div>
+            <canvas id="chartGD" width="900" height="200"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="row" style="justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-weight:700;">Pair Synergy 🤝</div>
+              <div class="small" title="Pairs are computed when two players are on the same team in the same match.">
+                Together win% vs expected win%</div>
+            </div>
+            <div class="row" style="gap:8px;">
+              <select id="pairPlayer" title="Filter pair synergy by player (matches Player A or Player B)."
+                style="min-width:220px;">
+                <option value="">All players</option>
+              </select>
+              <select id="minPairGames"
+                title="Hide player pairs with fewer than this many games together. Synergy becomes meaningful once pairs have played multiple times.">
+                <option value="5" selected>Min pair games: 5</option>
+                <option value="6">Min pair games: 6</option>
+                <option value="7">Min pair games: 7</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:10px; overflow:auto;">
+            <table id="tblPairs"></table>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <script defer src="js/data/mock-data.js"></script>
+    <script defer src="js/utils/helpers.js"></script>
+    <script defer src="js/data/loaders.js"></script>
+    <script defer src="js/model/model.js"></script>
+
+    <script defer src="js/render/kpis-cards.js"></script>
+    <script defer src="js/render/leaderboard.js"></script>
+    <script defer src="js/render/player-profile.js"></script>
+    <script defer src="js/render/weekly-matches.js"></script>
+    <script defer src="js/render/pair-synergy.js"></script>
+    <script defer src="js/render/achievements.js"></script>
+
+
+    <script defer src="js/ui/ui-change.js"></script>
+    <script defer src="js/render/render.js"></script>
+    <script defer src="js/app.js"></script>
+    <div id="achModalOverlay" class="ach-modal-overlay" style="display:none">
+      <div class="ach-modal">
+        <div class="ach-modal-header">
+          <span id="achModalTitle"></span>
+          <button class="ach-modal-close" onclick="closeAchievementModal()">✕</button>
+        </div>
+
+        <div class="ach-modal-body">
+          <img id="achModalIcon" class="ach-modal-icon" />
+          <div id="achModalBody"></div>
+          <div id="achModalTarget"></div>
+          <div id="achModalProgress"></div>
+          <div id="progressBarModel" class="ach-bar">
+            <div id="progressModal"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <!--timeline for modal-->
+    <div id="matchModalOverlay" class="match-modal-overlay" style="display:none">
+      <div class="match-modal">
+        <div class="match-modal-header">
+          <div>
+            <div id="matchModalTitle" style="font-weight:900;">Match</div>
+            <div id="matchModalSub" class="small" style="opacity:.85;">—</div>
+          </div>
+          <button class="match-modal-close" onclick="closeMatchModal()">✕</button>
+        </div>
+
+        <div class="match-modal-body">
+          <div class="timeline-wrap">
+            <!-- Team headers -->
+            <div class="timeline-headers">
+              <div class="timeline-header left">Black</div>
+              <div class="timeline-header right">White</div>
+            </div>
+
+            <div class="timeline-line"></div>
+            <div id="matchTimelineEvents"></div>
+          </div>
+          <div class="small" style="opacity:.8; margin-top:8px;">
+            Timeline represents 2 hours. Top = start, bottom = end.
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
+
 </html>
-	

@@ -207,20 +207,10 @@
       renderPlayerImpact(p, model);
       renderPlayerCaptainCard(p);
       renderPlayerTimeline(profile, model, playerId);
-      renderPlayerAchievementsCard();
 
       renderAchievements(p);
     }
 
-    function renderPlayerAchievementsCard() {
-      const mode = document.getElementById("viewMode")?.value || "all";
-      const achCard = document.getElementById("playerAchievementsCard");
-
-      if (achCard) {
-        achCard.style.display = mode === "all" ? "" : "none";
-        if (hasQueryFlag("mock")) achCard.style.display = "block";
-      }
-    }
 // -------------------------------
 // KPI Player Profile Card 🎯  - END
 // -------------------------------

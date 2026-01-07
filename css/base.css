@@ -50,10 +50,6 @@
   display: none;
 }
 
-#playerAchievementsCard {
-  display: none;
-}
-
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
 header{padding:18px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--headerBg);backdrop-filter:blur(8px);z-index:2}

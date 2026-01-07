@@ -23,7 +23,7 @@ let ALLTIME_SESSIONS_BY_PLAYER=new Map();
 
 // --- Remote CSV source 
 //points to the cloudfront s3 files
-const CLOUDFRONT_BASE_URL = "YOUR_CSV_URL"; 
+const CLOUDFRONT_BASE_URL = "YOUR_CSV"; 
 const PLAYER_CSV_URL = `${CLOUDFRONT_BASE_URL}/data/player_game.csv`;
 const MATCH_CSV_URL  = `${CLOUDFRONT_BASE_URL}/data/match_team.csv`;
 const EVENTS_CSV_URL = `${CLOUDFRONT_BASE_URL}/data/match_events.csv`;

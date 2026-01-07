@@ -1,5 +1,14 @@
 
 function renderAchievements(player){
+  const titleEl = document.getElementById("playerAchievementsTitle");
+  if (!titleEl) return;
+
+  if (player) {
+    titleEl.textContent = `🏆 ${player.player_name}'s · Trophy Room`;
+  } else {
+    titleEl.textContent = "🏆 Trophy Room";
+  }
+  
   const el=document.getElementById("playerAchievements");
   if(!el) return;
 
