@@ -8,15 +8,15 @@ Built with **plain HTML, CSS, and JavaScript** — no backend, no frameworks.
 
 ### 🌗 Theme Support
 ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/01_theme.png "Toggle Theme")
-- Light / Dark mode
-    You can select between Dark and Light mode.
-  Light:
+- Light / Dark mode   
+    You can select between Dark and Light mode.   
+  Light:   
     ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/01_a_theme_light.png "Toggle Theme Light")
-  Dark:
+  Dark:   
     ![alt text](https://github.com/paulosoderi/sunday_soccer_dashboard/blob/main/readme/01_a_theme_dark.png "Toggle Theme")
 
-- Persisted per browser (local only)
-    Toggling it will save the choice locally and will remember when the dashboard is oppened again
+- Persisted per browser (local only)   
+    Toggling it will save the choice locally and will remember when the dashboard is oppened again   
  
 
 ### 📅 Match & History Analysis   
