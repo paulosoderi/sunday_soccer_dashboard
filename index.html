@@ -243,7 +243,7 @@
         </div>
 
         <div class="card" style="margin-top:10px; padding:10px;" id="pRecentGamesCard">
-          <div  title="Captain stats within current filter." style="font-weight:700;">📅 Recent games</div>
+          <div title="Captain stats within current filter." style="font-weight:700;">📅 Recent games</div>
           <div class="row" style="margin-top:10px; justify-content:space-between; align-items:center;">
             <div>
               <div style="font-weight:700;"></div>
@@ -254,63 +254,63 @@
           </div>
           <div class="mono" id="pTimeline" style="margin-top:8px; line-height:1.7; white-space:pre-wrap;">—</div>
         </div>
-        <div class="card"  style="margin-top:10px; padding:10px;">
+        <div class="card" style="margin-top:10px; padding:10px;">
           <div id="divAchievements">
-            <div  id="playerAchievementsCard">
-              <div class="label" id="playerAchievementsTitle" style="font-weight:700;">🏆  Trophy Room</div>
+            <div id="playerAchievementsCard">
+              <div class="label" id="playerAchievementsTitle" style="font-weight:700;">🏆 Trophy Room</div>
               <div class="ach-grid" id="playerAchievements"></div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
 
-
-      <div class="grid twoinverted" style="margin-top:12px;">
-        <div class="card">
-          <div style="font-weight:700;">Weekly Scores 📅</div>
-          <div class="small" title="Click the game with event to open the timeline."> Click the row of matches with ℹ️
-            for the match's event timeline.</div>
-          <div class="row" style="justify-content:space-between; align-items:center; margin-top:10px;">
-            <div class="small" id="matchesPagerLabel">—</div>
-            <div class="row" id="matchesPager"></div>
-          </div>
-          <div style="margin-top:10px; overflow:auto;">
-            <table id="tblMatches"></table>
-          </div>
-          <div style="margin-top:12px;">
-            <div class="small" style="margin-bottom:6px;" title="Bar chart of (Black goals − White goals) by date.">Goal
-              difference by Sunday (Black perspective)</div>
-            <canvas id="chartGD" width="900" height="200"></canvas>
-          </div>
+    <div class="grid twoinverted" style="margin-top:12px;">
+      <div class="card">
+        <div style="font-weight:700;">Weekly Scores 📅</div>
+        <div class="small" title="Click the game with event to open the timeline."> Click the row of matches with ℹ️
+          for the match's event timeline.</div>
+        <div class="row" style="justify-content:space-between; align-items:center; margin-top:10px;">
+          <div class="small" id="matchesPagerLabel">—</div>
+          <div class="row" id="matchesPager"></div>
         </div>
-        <div class="card">
-          <div class="row" style="justify-content:space-between; align-items:center;">
-            <div>
-              <div style="font-weight:700;">Pair Synergy 🤝</div>
-              <div class="small" title="Pairs are computed when two players are on the same team in the same match.">
-                Together win% vs expected win%</div>
-            </div>
-            <div class="row" style="gap:8px;">
-              <select id="pairPlayer" title="Filter pair synergy by player (matches Player A or Player B)."
-                style="min-width:220px;">
-                <option value="">All players</option>
-              </select>
-              <select id="minPairGames"
-                title="Hide player pairs with fewer than this many games together. Synergy becomes meaningful once pairs have played multiple times.">
-                <option value="5" selected>Min pair games: 5</option>
-                <option value="6">Min pair games: 6</option>
-                <option value="7">Min pair games: 7</option>
-              </select>
-            </div>
-          </div>
-          <div style="margin-top:10px; overflow:auto;">
-            <table id="tblPairs"></table>
-          </div>
+        <div style="margin-top:10px; overflow:auto;">
+          <table id="tblMatches"></table>
         </div>
-
-
+        <div style="margin-top:12px;">
+          <div class="small" style="margin-bottom:6px;" title="Bar chart of (Black goals − White goals) by date.">Goal
+            difference by Sunday (Black perspective)</div>
+          <canvas id="chartGD" width="900" height="200"></canvas>
+        </div>
       </div>
+      <div class="card">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700;">Pair Synergy 🤝</div>
+            <div class="small" title="Pairs are computed when two players are on the same team in the same match.">
+              Together win% vs expected win%</div>
+          </div>
+          <div class="row" style="gap:8px;">
+            <select id="pairPlayer" title="Filter pair synergy by player (matches Player A or Player B)."
+              style="min-width:220px;">
+              <option value="">All players</option>
+            </select>
+            <select id="minPairGames"
+              title="Hide player pairs with fewer than this many games together. Synergy becomes meaningful once pairs have played multiple times.">
+              <option value="5" selected>Min pair games: 5</option>
+              <option value="6">Min pair games: 6</option>
+              <option value="7">Min pair games: 7</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:10px; overflow:auto;">
+          <table id="tblPairs"></table>
+        </div>
+      </div>
+
+
+
 
     </div>
 
